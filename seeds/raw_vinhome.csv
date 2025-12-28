@@ -1,6 +1,6 @@
-id,project_name,total_area,num_rooms,direction,price,description,created_at
-1,Vinhomes Ocean Park,75.5,2,South East,3500000000,"Beautiful 2BR apartment with sea view",2025-01-01 10:00:00
-2,Vinhomes Grand Park,50.0,1,North,2000000000,"Cozy studio for singles",2025-01-02 09:30:00
-3,Vinhomes Smart City,65.0,2,West,2800000000,"Modern design, full smart home",2025-01-02 11:45:00
-4,Vinhomes Ocean Park,75.5,2,South East,3500000000,"Duplicate entry for testing dedup",2025-01-01 10:00:00
-5,Unknown Project,,0,Unknown,,"Invalid data row",2025-01-03 08:00:00
+id,project_name,total_area,num_rooms,direction,price,description,created_at,icon_url
+1,Vinhomes Ocean Park,75.5,2,South East,3500000000,"Beautiful 2BR apartment with sea view",2025-01-01 10:00:00,"https://vinhome.vn/icon.png"
+2,Vinhomes Grand Park,50.0,1,North,2000000000,"Cozy studio for singles",2025-01-02 09:30:00,"https://vinhome.vn/studio.png"
+3,Vinhomes Smart City,65.0,2,West,2800000000,"Modern design, full smart home",2025-01-02 11:45:00,"https://vinhome.vn/smart.png"
+4,Vinhomes Ocean Park,75.5,2,South East,3500000000,"Duplicate entry for testing dedup",2025-01-01 10:00:00,"https://vinhome.vn/icon.png"
+5,Unknown Project,,0,Unknown,,"Invalid data row",2025-01-03 08:00:00,"invalid-url"

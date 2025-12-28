@@ -12,6 +12,10 @@ models:
       - name: price
         tests:
           - not_null
+          - positive_value
+      - name: icon_url
+        tests:
+          - valid_url
 
   - name: dim_vinfast
     description: "Final Cleaned VinFast Data"
@@ -23,3 +27,7 @@ models:
       - name: price
         tests:
           - not_null
+          - positive_value
+      - name: icon_url
+        tests:
+          - valid_url

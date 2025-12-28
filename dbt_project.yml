@@ -21,7 +21,9 @@ seeds:
     raw_vinhome:
       +column_types:
         price: bigint
+        icon_url: varchar
     raw_vinfast:
       +column_types:
         base_price: bigint
+        icon_url: varchar
 

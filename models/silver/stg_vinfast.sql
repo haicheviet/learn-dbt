@@ -1,6 +1,7 @@
 
 with source as (
-    select * from {{ ref('bronze_vinfast') }}
+    select * from {{ ref('vinfast_snapshot') }}
+    where dbt_valid_to is null
 ),
 
 deduplicated as (
@@ -12,9 +13,9 @@ deduplicated as (
         color,
         type as vehicle_type,
         base_price as price,
-        created_at
+        created_at,
+        icon_url
     from source
-    qualify row_number() over (partition by raw_id order by created_at desc) = 1
 )
 
 select

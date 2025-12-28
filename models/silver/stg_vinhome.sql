@@ -1,9 +1,12 @@
 
 with source as (
-    select * from {{ ref('bronze_vinhome') }}
+    select * from {{ ref('vinhome_snapshot') }}
+    where dbt_valid_to is null -- Get current records only
 ),
 
 deduplicated as (
+    -- Snapshots already handle uniqueness via dbt_scd_id, but here we want latest logical record
+    -- Since we filtered dbt_valid_to is null, we have the latest state.
     select
         raw_id,
         project_name as title,
@@ -12,9 +15,9 @@ deduplicated as (
         num_rooms,
         direction,
         price,
-        created_at
+        created_at,
+        icon_url
     from source
-    qualify row_number() over (partition by raw_id order by created_at desc) = 1
 )
 
 select

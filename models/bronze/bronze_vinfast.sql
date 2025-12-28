@@ -7,5 +7,6 @@ select
     type,
     base_price,
     description,
-    created_at
+    created_at,
+    icon_url
 from {{ ref('raw_vinfast') }}

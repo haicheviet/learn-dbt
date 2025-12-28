@@ -4,10 +4,6 @@ import hashlib
 import json
 from typing import List, Optional
 from pydantic import BaseModel, Field, ValidationError
-
-# --- 1. Data Contracts (Pydantic Firewall) ---
-
-
 from datetime import datetime
 
 class BaseItem(BaseModel):
@@ -17,7 +13,11 @@ class BaseItem(BaseModel):
     item_type: str
     price: Optional[int] = 0
     created_at: datetime
+    icon_url: Optional[str] = None
     
+    # Input from dbt
+    vector_text_raw: Optional[str] = ""
+
     # Enriched fields
     doc_id: Optional[str] = None
     vector_text: Optional[str] = None
@@ -27,25 +27,17 @@ class BaseItem(BaseModel):
         data_str = "".join([str(getattr(self, f)) for f in sensitive_fields])
         return hashlib.sha256(data_str.encode()).hexdigest()
 
-    def calculate_weighted_text(self, weights: dict) -> str:
-        """Weighted embedding text generation"""
-        parts = []
-        for field, weight in weights.items():
-            val = getattr(self, field, "")
-            parts.extend([str(val)] * weight) # Repeat text by weight
-        return " ".join(parts)
-
 class VinHomeItem(BaseItem):
     total_area: Optional[float]
     num_rooms: Optional[int]
     direction: Optional[str]
 
     def process(self):
-        # Sensitive fields for VinHome: title, total_area, num_rooms, direction, price
+        # Sensitive fields for VinHome
         self.doc_id = self.generate_hash(['title', 'total_area', 'num_rooms', 'direction', 'price'])
         
-        # Weighted Embedding: title (x3), description (x1)
-        self.vector_text = self.calculate_weighted_text({'title': 3, 'description': 1})
+        # Use pre-calculated text from dbt
+        self.vector_text = self.vector_text_raw
 
 class VinFastItem(BaseItem):
     version: Optional[str]
@@ -53,11 +45,11 @@ class VinFastItem(BaseItem):
     vehicle_type: Optional[str]
 
     def process(self):
-        # Sensitive: title, version, color, vehicle_type, price
+        # Sensitive fields
         self.doc_id = self.generate_hash(['title', 'version', 'color', 'vehicle_type', 'price'])
         
-        # Weighted: title (x3), version (x2), description (x1)
-        self.vector_text = self.calculate_weighted_text({'title': 3, 'version': 2, 'description': 1})
+        # Use pre-calculated text from dbt
+        self.vector_text = self.vector_text_raw
 
 
 # --- 2. AI Service Logic ---

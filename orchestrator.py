@@ -12,18 +12,17 @@ def run_command(command):
         sys.exit(1)
 
 def main():
-    print(">>> 1. Ingestion (Bronze) & Transformation (Silver)")
-    # Using 'dbt build' which includes seeds, run, and tests
-    # Running seeds first to ensure source tables exist
+    print(">>> 0. Ingestion (Seeds & Bronze)")
+    # Run seeds then create bronze views so snapshots can read them
     run_command("source .venv/bin/activate && dbt seed")
-    
-    # Run Bronze/Silver transformations and tests
-    # Including bronze to ensure views are created
-    run_command("source .venv/bin/activate && dbt build --select models/bronze models/silver")
+    run_command("source .venv/bin/activate && dbt run --select models/bronze")
 
-    print(">>> 2. Transformation (Gold) [Gated]")
-    # Only runs if Silver passing
-    run_command("source .venv/bin/activate && dbt build --select models/gold")
+    print(">>> 1. History Tracking (Snapshots)")
+    run_command("source .venv/bin/activate && dbt snapshot")
+
+    print(">>> 2. Transformation (Silver & Gold)")
+    # Run Silver/Gold transformations and tests
+    run_command("source .venv/bin/activate && dbt build --select models/silver models/gold")
 
     print(">>> 3. AI Engine [Shared Service]")
     # Python script processing

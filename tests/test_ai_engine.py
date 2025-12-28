@@ -32,8 +32,10 @@ def test_vinhome_validation_missing_fields():
     with pytest.raises(ValidationError):
         VinHomeItem(id=1, title="Missing fields")
 
-def test_weighted_embedding_logic():
-    """Test that title is weighted correctly in vector_text"""
+def test_vector_input_passthrough():
+    """Test that python correctly receives the vector_text from dbt/SQL"""
+    expected_text = "VF8 VF8 VF8 Plus Plus SUV"
+    
     item = VinFastItem(
         id=1,
         title="VF8",
@@ -43,13 +45,12 @@ def test_weighted_embedding_logic():
         created_at=datetime(2025, 1, 1),
         version="Plus",
         color="Red",
-        vehicle_type="Car"
+        vehicle_type="Car",
+        vector_text_raw=expected_text # Simulate input from dbt
     )
     item.process()
-    # Title (VF8) weight is 3, Plus weight is 2
-    assert "VF8 VF8 VF8" in item.vector_text
-    assert "Plus Plus" in item.vector_text
-    assert "SUV" in item.vector_text
+    
+    assert item.vector_text == expected_text
 
 def test_vinfast_hash_uniqueness():
     """Different versions should have different hashes"""
