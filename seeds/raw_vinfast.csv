@@ -1,0 +1,5 @@
+id,product_name,version,color,type,base_price,description,created_at
+1,VF8,Plus,Red,Car,1200000000,"Electric SUV with autopilot",2025-01-10 14:00:00
+2,VF9,Eco,Black,Car,1500000000,"Luxury 7-seater SUV",2025-01-11 09:00:00
+3,Vento,Standard,Blue,Scooter,50000000,"Smart electric scooter",2025-01-12 16:20:00
+4,VF8,Plus,Red,Car,1200000000,"Duplicate VF8 entry",2025-01-10 14:00:00

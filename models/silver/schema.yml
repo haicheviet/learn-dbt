@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: stg_vinhome
+    columns:
+      - name: raw_id
+        tests:
+          - unique
+          - not_null
+      - name: title
+        tests:
+          - not_null
+
+  - name: stg_vinfast
+    columns:
+      - name: raw_id
+        tests:
+          - unique
+          - not_null
+      - name: title
+        tests:
+          - not_null

@@ -1,0 +1,27 @@
+
+name: 'learn_dbt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'learn_dbt'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by 'dbt clean'
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  learn_dbt:
+    raw_vinhome:
+      +column_types:
+        price: bigint
+    raw_vinfast:
+      +column_types:
+        base_price: bigint
+
